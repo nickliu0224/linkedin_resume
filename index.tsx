@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // --- 內建圖示 (無需外部套件) ---
-// 為了確保您在任何環境都能執行，我將 lucide-react 替換為這些直接內嵌的 SVG
 const IconUser = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
 const IconBriefcase = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>;
 const IconGraduationCap = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>;
@@ -15,9 +14,6 @@ const IconChevronRight = () => <svg xmlns="http://www.w3.org/2000/svg" width="18
 const IconAward = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>;
 const IconMenu = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>;
 const IconX = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 18 12"/></svg>;
-
-// --- Types ---
-type Page = 'home' | 'experience' | 'education';
 
 // --- Data ---
 const profile = {
@@ -97,7 +93,8 @@ const experiences = [
       "建立 SOP 與權責劃分 (R&R)，加速產品交付。",
       "監控系統效能、音訊、相機、觸控及 UI 體驗的驗證結果。",
       "為電信商 (CHT, T-Mobile, Telenor 等) 提供軟體客製化服務。",
-      "監督 WHQL 與 Google CTS 等認證提交。"
+      "監督 WHQL 與 Google CTS 等認證提交。",
+      "Provided prompt recovery plans for risk management at different project stages."
     ]
   },
   {
@@ -136,7 +133,8 @@ const certifications = [
 
 // --- Components ---
 
-const NavBar = ({ currentPage, setPage }: { currentPage: Page, setPage: (p: Page) => void }) => {
+// 移除 TypeScript 定義 ({ currentPage, setPage }: { ... }) 改為一般 JS ({ currentPage, setPage })
+const NavBar = ({ currentPage, setPage }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
@@ -152,7 +150,8 @@ const NavBar = ({ currentPage, setPage }: { currentPage: Page, setPage: (p: Page
           {/* Logo / Name */}
           <div 
             className="font-bold text-xl cursor-pointer flex items-center gap-2 hover:text-blue-400 transition-colors"
-            onClick={() => setPage('home' as Page)}
+            // 移除 'as Page' 型別斷言
+            onClick={() => setPage('home')}
           >
             <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
               NL
@@ -165,7 +164,7 @@ const NavBar = ({ currentPage, setPage }: { currentPage: Page, setPage: (p: Page
             {navItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => setPage(item.id as Page)}
+                onClick={() => setPage(item.id)}
                 className={`flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-300 ${
                   currentPage === item.id 
                     ? 'bg-blue-600 text-white font-medium shadow-md' 
@@ -195,7 +194,7 @@ const NavBar = ({ currentPage, setPage }: { currentPage: Page, setPage: (p: Page
               <button
                 key={item.id}
                 onClick={() => {
-                  setPage(item.id as Page);
+                  setPage(item.id);
                   setIsOpen(false);
                 }}
                 className={`flex items-center gap-3 w-full text-left px-3 py-3 rounded-md text-base font-medium ${
@@ -453,22 +452,21 @@ const Footer = () => (
 );
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [currentPage, setCurrentPage] = useState('home');
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
-      {/* !! 關鍵設定 !!
-        使用最原始的 HTML 方式強制載入 Tailwind CSS。
-        移除 useEffect 方式，避免因元件載入順序或 CodeSandbox 環境限制導致的樣式失效。
+      {/* !! 關鍵設定 (Universal Loader) !!
+        這裡同時載入 Tailwind CSS 並提供基礎樣式重置。
+        即使 Tailwind 載入失敗，基本的 style 標籤也能防止跑版。
       */}
       <div dangerouslySetInnerHTML={{ __html: `
         <script src="https://cdn.tailwindcss.com"></script>
         <style>
-          /* 確保頁面載入時的基本字體 */
-          body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-          /* 簡單的淡入動畫 */
-          @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+          body { margin: 0; font-family: system-ui, sans-serif; background: #f8fafc; color: #0f172a; }
+          img, svg { vertical-align: middle; }
           .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+          @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         </style>
       `}} />
 
