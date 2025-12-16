@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Menu, 
   X, 
   Mail, 
   Linkedin, 
-  Github, // Added Github icon
+  Github, 
   MapPin, 
   Briefcase, 
   GraduationCap, 
@@ -26,7 +26,7 @@ const profile = {
   location: "台灣 新北市 (New Taipei City, Taiwan)",
   email: "ashin524@gmail.com",
   linkedin: "www.linkedin.com/in/nick-liu-177155117",
-  github: "github.com/username", // Added GitHub link placeholder
+  github: "github.com/username", 
   summary: "擁有超過 10 年經驗的資深專案經理，專精於軟體開發、遊戲平台及行動應用程式專案管理。具備領導跨職能團隊（前端、後端、設計、QA）的豐富經驗，擅長與國際客戶溝通需求、風險管理及流程優化。英語流利，具備 PMP 思維與敏捷開發實務經驗。",
   skills: [
     "專案管理 (Project Management)",
@@ -454,6 +454,18 @@ const Footer = () => (
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
+
+  // --- 自動載入 Tailwind CSS (解決網頁變醜的問題) ---
+  useEffect(() => {
+    // 檢查是否已經有 Tailwind，沒有的話就載入 CDN
+    const existingScript = document.querySelector('script[src="https://cdn.tailwindcss.com"]');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.src = "https://cdn.tailwindcss.com";
+      script.async = true;
+      document.head.appendChild(script);
+    }
+  }, []);
 
   const renderContent = () => {
     switch (currentPage) {
