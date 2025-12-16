@@ -455,9 +455,9 @@ const Footer = () => (
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
 
-  // --- 自動載入 Tailwind CSS (解決網頁變醜的問題) ---
+  // --- 自動載入 Tailwind CSS (更強制的方法) ---
+  // 這段 useEffect 是為了防止 dangerouslySetInnerHTML 在某些環境失效的備案
   useEffect(() => {
-    // 檢查是否已經有 Tailwind，沒有的話就載入 CDN
     const existingScript = document.querySelector('script[src="https://cdn.tailwindcss.com"]');
     if (!existingScript) {
       const script = document.createElement('script');
@@ -478,6 +478,19 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+      {/* !! 關鍵修復 !!
+        使用 dangerouslySetInnerHTML 直接將 Script 標籤寫入 DOM，
+        這在單一檔案複製貼上的情境下，是最能確保樣式生效的方法。
+      */}
+      <div dangerouslySetInnerHTML={{ __html: `
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+          /* 備用樣式：如果 Tailwind 載入失敗，至少保持基本排版 */
+          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; }
+          .min-h-screen { min-height: 100vh; }
+        </style>
+      `}} />
+
       <NavBar currentPage={currentPage} setPage={setCurrentPage} />
       
       <main className="max-w-6xl mx-auto px-4 py-8">
