@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Menu, 
-  X, 
-  Mail, 
-  Linkedin, 
-  Github, 
-  MapPin, 
-  Briefcase, 
-  GraduationCap, 
-  Award, 
-  ChevronRight, 
-  Globe, 
-  User, 
-  CheckCircle,
-  Download
-} from 'lucide-react';
+
+// --- 內建圖示 (無需外部套件) ---
+// 為了確保您在任何環境都能執行，我將 lucide-react 替換為這些直接內嵌的 SVG
+const IconUser = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
+const IconBriefcase = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>;
+const IconGraduationCap = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>;
+const IconMail = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>;
+const IconLinkedin = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>;
+const IconGithub = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 6 6 6 9.81 1 2.22.65 3.33 3.33 3.33 5.33-4 1.25-5.91 3.5-9.45 3.5H9a2 2 0 0 1-2-2v-4H3c-1 0-2 1-2 2v10"/><path d="M16 22h4v-3a2 2 0 0 0-2-2h-2"/><path d="M9 22H5v-2a2 2 0 0 1 2-2h2"/></svg>;
+const IconMapPin = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>;
+const IconGlobe = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>;
+const IconCheckCircle = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>;
+const IconChevronRight = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>;
+const IconAward = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>;
+const IconMenu = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>;
+const IconX = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 18 12"/></svg>;
 
 // --- Types ---
 type Page = 'home' | 'experience' | 'education';
@@ -139,10 +139,10 @@ const certifications = [
 const NavBar = ({ currentPage, setPage }: { currentPage: Page, setPage: (p: Page) => void }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const navItems: { id: Page; label: string; icon: React.ReactNode }[] = [
-    { id: 'home', label: '個人簡介 (Profile)', icon: <User size={18} /> },
-    { id: 'experience', label: '工作經歷 (Experience)', icon: <Briefcase size={18} /> },
-    { id: 'education', label: '學歷與證照 (Edu & Certs)', icon: <GraduationCap size={18} /> },
+  const navItems = [
+    { id: 'home', label: '個人簡介 (Profile)', icon: <IconUser /> },
+    { id: 'experience', label: '工作經歷 (Experience)', icon: <IconBriefcase /> },
+    { id: 'education', label: '學歷與證照 (Edu & Certs)', icon: <IconGraduationCap /> },
   ];
 
   return (
@@ -152,7 +152,7 @@ const NavBar = ({ currentPage, setPage }: { currentPage: Page, setPage: (p: Page
           {/* Logo / Name */}
           <div 
             className="font-bold text-xl cursor-pointer flex items-center gap-2 hover:text-blue-400 transition-colors"
-            onClick={() => setPage('home')}
+            onClick={() => setPage('home' as Page)}
           >
             <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
               NL
@@ -165,7 +165,7 @@ const NavBar = ({ currentPage, setPage }: { currentPage: Page, setPage: (p: Page
             {navItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => setPage(item.id)}
+                onClick={() => setPage(item.id as Page)}
                 className={`flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-300 ${
                   currentPage === item.id 
                     ? 'bg-blue-600 text-white font-medium shadow-md' 
@@ -181,7 +181,7 @@ const NavBar = ({ currentPage, setPage }: { currentPage: Page, setPage: (p: Page
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button onClick={() => setIsOpen(!isOpen)} className="text-slate-300 hover:text-white p-2">
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <IconX /> : <IconMenu />}
             </button>
           </div>
         </div>
@@ -195,7 +195,7 @@ const NavBar = ({ currentPage, setPage }: { currentPage: Page, setPage: (p: Page
               <button
                 key={item.id}
                 onClick={() => {
-                  setPage(item.id);
+                  setPage(item.id as Page);
                   setIsOpen(false);
                 }}
                 className={`flex items-center gap-3 w-full text-left px-3 py-3 rounded-md text-base font-medium ${
@@ -240,16 +240,16 @@ const HomePage = () => (
 
           <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-4">
             <a href={`mailto:${profile.email}`} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-medium transition-all shadow-lg hover:shadow-blue-500/30">
-              <Mail size={18} />
+              <IconMail />
               聯絡我 (Email)
             </a>
             <a href={`https://${profile.linkedin}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-full font-medium transition-all border border-slate-600">
-              <Linkedin size={18} />
+              <IconLinkedin />
               LinkedIn
             </a>
              {/* New GitHub Button */}
              <a href={`https://${profile.github}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-full font-medium transition-all border border-gray-600">
-              <Github size={18} />
+              <IconGithub />
               GitHub
             </a>
           </div>
@@ -260,15 +260,15 @@ const HomePage = () => (
           <h4 className="font-bold text-lg mb-4 border-b border-white/20 pb-2">聯絡資訊 (Contact)</h4>
           <div className="space-y-4">
             <div className="flex items-start gap-3">
-              <Mail className="text-blue-400 shrink-0 mt-1" size={18} />
+              <span className="text-blue-400 shrink-0 mt-1"><IconMail /></span>
               <span className="text-sm break-all">{profile.email}</span>
             </div>
             <div className="flex items-start gap-3">
-              <MapPin className="text-blue-400 shrink-0 mt-1" size={18} />
+              <span className="text-blue-400 shrink-0 mt-1"><IconMapPin /></span>
               <span className="text-sm">{profile.location}</span>
             </div>
             <div className="flex items-start gap-3">
-              <Globe className="text-blue-400 shrink-0 mt-1" size={18} />
+              <span className="text-blue-400 shrink-0 mt-1"><IconGlobe /></span>
               <div className="flex flex-col gap-1 text-sm">
                 {profile.languages.map((lang, idx) => (
                   <span key={idx} className="bg-white/10 px-2 py-0.5 rounded text-xs inline-block w-fit">
@@ -286,7 +286,7 @@ const HomePage = () => (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 md:p-10">
       <div className="flex items-center gap-3 mb-6">
         <div className="p-2 bg-blue-100 text-blue-600 rounded-lg">
-          <CheckCircle size={24} />
+          <IconCheckCircle />
         </div>
         <h2 className="text-2xl font-bold text-slate-800">專業技能 (Skills)</h2>
       </div>
@@ -310,7 +310,7 @@ const ExperiencePage = () => (
   <div className="animate-fade-in bg-white rounded-2xl shadow-sm border border-slate-200 p-8 md:p-12 min-h-screen">
     <div className="flex items-center gap-3 mb-10 border-b border-slate-100 pb-6">
       <div className="p-3 bg-indigo-100 text-indigo-600 rounded-xl">
-        <Briefcase size={28} />
+        <IconBriefcase />
       </div>
       <div>
         <h2 className="text-3xl font-bold text-slate-800">工作經歷</h2>
@@ -336,7 +336,7 @@ const ExperiencePage = () => (
                 {exp.period}
               </span>
               <span className="flex items-center gap-1 text-slate-400 text-sm">
-                <MapPin size={14} /> {exp.location}
+                <IconMapPin /> {exp.location}
               </span>
             </div>
           </div>
@@ -350,7 +350,7 @@ const ExperiencePage = () => (
           <ul className="space-y-3">
             {exp.details.map((detail, idx) => (
               <li key={idx} className="flex items-start gap-3 text-slate-600 leading-relaxed">
-                <ChevronRight size={18} className="text-indigo-400 mt-1 shrink-0" />
+                <span className="text-indigo-400 mt-1 shrink-0"><IconChevronRight /></span>
                 <span>{detail}</span>
               </li>
             ))}
@@ -367,7 +367,7 @@ const EducationPage = () => (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 md:p-12">
       <div className="flex items-center gap-3 mb-8 border-b border-slate-100 pb-4">
         <div className="p-3 bg-emerald-100 text-emerald-600 rounded-xl">
-          <GraduationCap size={28} />
+          <IconGraduationCap />
         </div>
         <div>
           <h2 className="text-3xl font-bold text-slate-800">學歷</h2>
@@ -399,7 +399,7 @@ const EducationPage = () => (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 md:p-12">
       <div className="flex items-center gap-3 mb-8 border-b border-slate-100 pb-4">
         <div className="p-3 bg-orange-100 text-orange-600 rounded-xl">
-          <Award size={28} />
+          <IconAward />
         </div>
         <div>
           <h2 className="text-3xl font-bold text-slate-800">證照與資格</h2>
@@ -411,7 +411,7 @@ const EducationPage = () => (
         {certifications.map((cert, index) => (
           <div key={index} className="flex items-center gap-4 p-5 bg-gradient-to-r from-slate-50 to-white rounded-xl border border-slate-200 hover:border-orange-300 transition-colors group">
             <div className="p-3 bg-white rounded-full shadow-sm text-orange-500 group-hover:scale-110 transition-transform">
-              <Award size={24} />
+              <IconAward />
             </div>
             <div>
               <h3 className="font-bold text-slate-800">{cert.name}</h3>
@@ -432,7 +432,7 @@ const EducationPage = () => (
         href={`mailto:${profile.email}`} 
         className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105"
       >
-        <Mail size={20} />
+        <IconMail />
         發送郵件給我
       </a>
     </div>
@@ -455,46 +455,29 @@ const Footer = () => (
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
 
-  // --- 自動載入 Tailwind CSS (更強制的方法) ---
-  // 這段 useEffect 是為了防止 dangerouslySetInnerHTML 在某些環境失效的備案
-  useEffect(() => {
-    const existingScript = document.querySelector('script[src="https://cdn.tailwindcss.com"]');
-    if (!existingScript) {
-      const script = document.createElement('script');
-      script.src = "https://cdn.tailwindcss.com";
-      script.async = true;
-      document.head.appendChild(script);
-    }
-  }, []);
-
-  const renderContent = () => {
-    switch (currentPage) {
-      case 'home': return <HomePage />;
-      case 'experience': return <ExperiencePage />;
-      case 'education': return <EducationPage />;
-      default: return <HomePage />;
-    }
-  };
-
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
-      {/* !! 關鍵修復 !!
-        使用 dangerouslySetInnerHTML 直接將 Script 標籤寫入 DOM，
-        這在單一檔案複製貼上的情境下，是最能確保樣式生效的方法。
+      {/* !! 關鍵設定 !!
+        使用最原始的 HTML 方式強制載入 Tailwind CSS。
+        移除 useEffect 方式，避免因元件載入順序或 CodeSandbox 環境限制導致的樣式失效。
       */}
       <div dangerouslySetInnerHTML={{ __html: `
         <script src="https://cdn.tailwindcss.com"></script>
         <style>
-          /* 備用樣式：如果 Tailwind 載入失敗，至少保持基本排版 */
-          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; }
-          .min-h-screen { min-height: 100vh; }
+          /* 確保頁面載入時的基本字體 */
+          body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+          /* 簡單的淡入動畫 */
+          @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+          .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
         </style>
       `}} />
 
       <NavBar currentPage={currentPage} setPage={setCurrentPage} />
       
       <main className="max-w-6xl mx-auto px-4 py-8">
-        {renderContent()}
+        {currentPage === 'home' && <HomePage />}
+        {currentPage === 'experience' && <ExperiencePage />}
+        {currentPage === 'education' && <EducationPage />}
       </main>
 
       <Footer />
